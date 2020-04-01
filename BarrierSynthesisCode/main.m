@@ -41,15 +41,6 @@ dg = 0.01;                                  % 1cm grid size,
 
 [bwd, grid] = barrier.interpolant.buildRobotarium(dg); % Build the interpolant object
 bwd.specifyByRadii(spec);                   % Generate the interpolants.
-% I = imread('Squiggle_2_trial.png');
-% % h1 = axes;
-% % image('XData', [-1.6, 1.6], 'YData', [-1, 1], 'CData', I);
-% % set(h1, 'YDir', 'reverse');
-% % axis([-1.6 1.6 -1 1])
-% bW = imbinarize(I);
-% bW = im2single(bW);
-% bW = bW(:,:);
-% bwd.squiggle(bW);
 
 %==[2]  ROS Environment Setup
 %
@@ -70,13 +61,6 @@ msg.Angular.Z = 0.0;
 send(pub,msg);
 % ==[3]  Plot on MATLAB.
 
-% PlotGoalsObstacles();
-% 
-% Plt_data1 = [];        % Plot the path of Robot
-% Plt_data1 = [Plt_data1; x_state(1,1); x_state(2,1)];
-% p1 = plot(Plt_data1(1), Plt_data1(2), 'k-.', 'LineWidth', 3);
-% drawnow
-
 X_Obsneg = [];
 Y_Obsneg = [];
 X_Obspos = [];
@@ -87,11 +71,6 @@ X_pos = [];
 Y_pos = [];
 gdatasdist = [];
 x_goal = [2.7 - 1.6; 1.57 - 1];
-% % x_goal = [2.7 - 1.6; 1.9 - 1];
-% plot(x_goal(1), x_goal(2),'rX')             % Plot goal location
-% plot(x_state(1), x_state(2), 'gX')          % PLot initial condition
-% axis([-1.6 1.6 -1 1])
-% hold on    
 
 h_eval = [];
 iter = [];
@@ -151,12 +130,6 @@ while(norm(x_state(1:2,:) - x_goal) >= 0.1)     % Solve until goal is reached
         
         [gridFine,grids,bord_samp,shapeFine,shapeGrid] = bar.buildSTDR(x_state); 
         dist = bar.evalSVM(grids, gridFine, shapeFine, bord_samp, samp, classif);
-        
-%       Plot zero-level set of SVM-kernel estimated barrier function
-%         contour(bar.xx, bar.yy, dist, [0 0])
-%         axis equal;
-%         xlim([-bar.grid_x, bar.grid_x]);
-%         ylim([-bar.grid_y, bar.grid_y]);
 
         [h, A, B, u] = bar.barrier_constraint(x_state(1:2,:), u_des);
         display(h);
