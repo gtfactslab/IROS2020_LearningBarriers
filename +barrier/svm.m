@@ -85,11 +85,6 @@ if all(size(gdatasdist) == size(this.xx))
   this.dfx = griddedInterpolant(this.xx',this.yy', px', 'cubic');          % H' wrt x
   this.dfy = griddedInterpolant(this.xx',this.yy', py', 'cubic');          % H' wrt y
 
-  
-%   figure(5);                          % Plot the surface of barrier
-%   surf(this.xx, this.yy, gdatasdist);
-%   axis([0 this.grid_x 0 this.grid_y])
-
 else
   error('Array dimensions do not align with the expected size')
 end
@@ -201,19 +196,10 @@ for ii = 1:this.nObs
 
 %       plot(obst_Lp_box{ii}(1, :), obst_Lp_box{ii}(2, :), 'k-'); % Plot Lp obstacle
 end
-% xlim([this.grid_x(1), this.grid_x(end)]); % Modified limits on X Axis
-% ylim([this.grid_y(1), this.grid_y(end)]); % Modified limits on Y Axis
 
 % Define function that plots the obstacles.
 plotObs = @(ob, cspec, i)eval(['for i=1:length(ob),', ...
                         'plot(ob{i}(1,:),ob{i}(2,:),cspec), end']);
-
-% Modification made according to the Robotarium Worskapce dimensions which
-% extend in the negative half.
-% pos_samp_plot_hdl = plot(this.grid_x(1), this.grid_y(1), 'g*');
-% neg_samp_plot_hdl = plot(this.grid_x(1), this.grid_y(1), 'r*');
-% 
-% hold off;
 
 end
 %============================ evalBoundary ============================
